@@ -6,17 +6,49 @@ import java.awt.geom.AffineTransform;
 import java.awt.*;
 import entidades.*;
 
-public class Jjogo{
+public class Jjogo {
 
     private Redimension r = new Redimension();
+    private WorldGeneration w = new WorldGeneration();
 
-    public void desenhar(Graphics g, Worm worm, int largura, int altura, Component componente, int velocidadeX, int velocidadeY) {
+    public void desenhar(Graphics g, Worm worm, int largura, int altura, Component componente, int velocidadeX,
+            int velocidadeY) {
         r.setW(largura);
         r.setH(altura);
-        int wormSizeW = r.porcentagem(2, "w");
-        int wormSizeH = r.porcentagem(4, "h");
+        int wormSizeW = r.porcentagem(4, "w");
+        int wormSizeH = r.porcentagem(8, "h");
 
         ImageIcon icon = new ImageIcon("sprites/worm/parado_W_1.png");
+        Image image = icon.getImage();
+        int[] world = w.gen("0");
+        for (int i = 0; i < world.length; i++) {
+            switch (world[i]) {
+                case 5:
+                    icon = new ImageIcon("sprites/minerios/terra_1.png");
+                    break;
+                case 4:
+                    icon = new ImageIcon("sprites/minerios/cobre_1.png");
+                    break;
+                case 3:
+                    icon = new ImageIcon("sprites/minerios/ferro_1.png");
+                    break;
+                case 2:
+                    icon = new ImageIcon("sprites/minerios/ouro_1.png");
+                    break;
+                case 1:
+                    icon = new ImageIcon("sprites/minerios/diamante_1.png");
+                    break;
+                case 0:
+                    icon = new ImageIcon("sprites/minerios/rubi_1.png");
+                    break;
+                default:
+                    icon = new ImageIcon("sprites/minerios/terra_1.png");
+                    break;
+            }
+            image = icon.getImage();
+            g.drawImage(image, (wormSizeW * (i % 26)), (wormSizeH * (i / 26)), wormSizeW, wormSizeH, componente);
+        }
+
         String direcao = "d";
         direcao = r.direcao(velocidadeX, velocidadeY, direcao);
         switch (direcao) {
@@ -36,8 +68,8 @@ public class Jjogo{
                 icon = new ImageIcon("sprites/worm/parado_A_1.png");
             }
         }
-        Image image = icon.getImage();
+        image = icon.getImage();
         g.drawImage(image, worm.getX(), worm.getY(), wormSizeW, wormSizeH, componente); // Personagem
     }
-    
+
 }

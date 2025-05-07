@@ -35,8 +35,10 @@ public class WormGame extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (0 != controle.getVelocidadeX() || 0 != controle.getVelocidadeY()) {
-            worm.setX(worm.getX() + controle.getVelocidadeX());
-            worm.setY(worm.getY() + controle.getVelocidadeY());
+            if(worm.getX() + controle.getVelocidadeX() >= 0 && worm.getX() + controle.getVelocidadeX() <= getWidth())
+                worm.setX(worm.getX() + controle.getVelocidadeX());
+            if (worm.getY() + controle.getVelocidadeY() >= 0 && worm.getY() + controle.getVelocidadeY() <= getHeight())
+                worm.setY(worm.getY() + controle.getVelocidadeY());
             repaint();
         }
     }
