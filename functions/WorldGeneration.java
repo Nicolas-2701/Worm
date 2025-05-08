@@ -148,7 +148,7 @@ public class WorldGeneration {
         }
         for (int i = 0; i < world.length; i++) {
             try {
-                if (world[i - 1] == world[i + 1] && world[i] != 0) {
+                if (world[i - 1] == world[i + 1] && world[i] != 0 && world[i] < 5) {
                     world[i] += 1;
                 }
                 if (world[i - 26] == world[i + 26] && world[i] != 0) {

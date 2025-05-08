@@ -10,6 +10,8 @@ public class WormGame extends JPanel implements ActionListener {
     private Worm worm = new Worm();
     private Jjogo jjogo = new Jjogo();
     private Redimension r = new Redimension();
+    private WorldGeneration w = new WorldGeneration();
+    int[] world = w.gen("0");
 
     public WormGame() {
         Timer timer = new Timer(16, this); // ~60 FPS
@@ -29,7 +31,7 @@ public class WormGame extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        jjogo.desenhar(g, worm, getWidth(), getHeight(), this, controle.getVelocidadeX(), controle.getVelocidadeY());
+        jjogo.desenhar(g, worm, getWidth(), getHeight(), this, controle.getVelocidadeX(), controle.getVelocidadeY(), world);
     }
 
     @Override

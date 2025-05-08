@@ -9,10 +9,10 @@ import entidades.*;
 public class Jjogo {
 
     private Redimension r = new Redimension();
-    private WorldGeneration w = new WorldGeneration();
+    private Geral ge = new Geral();
 
     public void desenhar(Graphics g, Worm worm, int largura, int altura, Component componente, int velocidadeX,
-            int velocidadeY) {
+            int velocidadeY, int[] world) {
         r.setW(largura);
         r.setH(altura);
         int wormSizeW = r.porcentagem(4, "w");
@@ -20,7 +20,6 @@ public class Jjogo {
 
         ImageIcon icon = new ImageIcon("sprites/worm/parado_W_1.png");
         Image image = icon.getImage();
-        int[] world = w.gen("0");
         for (int i = 0; i < world.length; i++) {
             switch (world[i]) {
                 case 5:
@@ -42,11 +41,19 @@ public class Jjogo {
                     icon = new ImageIcon("sprites/minerios/rubi_1.png");
                     break;
                 default:
-                    icon = new ImageIcon("sprites/minerios/terra_1.png");
+                    icon = new ImageIcon("sprites/minerios/nada_1.png");
                     break;
             }
             image = icon.getImage();
             g.drawImage(image, (wormSizeW * (i % 26)), (wormSizeH * (i / 26)), wormSizeW, wormSizeH, componente);
+            Rectangle wormColi = new Rectangle(worm.getX(), worm.getY(), wormSizeW, wormSizeH);
+            Rectangle blockColi = new Rectangle((wormSizeW * (i % 26)), (wormSizeH * (i / 26)), wormSizeW, wormSizeH);
+            if (wormColi.intersects(blockColi)) {
+                if(world[i]>-1){
+                    world[i] = -1;
+                    ge.tocarSom("sons/comendo.wav");
+                }
+            }
         }
 
         String direcao = "d";

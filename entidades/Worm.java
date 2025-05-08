@@ -3,6 +3,7 @@ package entidades;
 public class Worm {
     private int x = 100;
     private int y = 100;
+    private String [] inv = new String [6];
 
     public int getX() {
         return x;
@@ -15,5 +16,11 @@ public class Worm {
     }
     public void setY(int y) {
         this.y = y;
+    }
+    public String[] getInv() {
+        return inv;
+    }
+    public void setInv(String[] inv) {
+        this.inv = inv;
     }
 }
