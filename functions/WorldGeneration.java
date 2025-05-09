@@ -121,6 +121,9 @@ public class WorldGeneration {
 
     public int[] gen(String seed) {
         int seedI = transform(seed);
+        if(seedI<0){
+            seedI = seedI*seedI;
+        }
         int[] world = new int[340];
         int unluck = 0;
         for (int i = 0; i < world.length; i++) {
@@ -155,7 +158,7 @@ public class WorldGeneration {
                     world[i] -= 1;
                 }
             } catch (Exception e) {
-                // TODO: handle exception
+                
             }
         }
         return world;

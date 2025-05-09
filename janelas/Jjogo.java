@@ -48,11 +48,9 @@ public class Jjogo {
             g.drawImage(image, (wormSizeW * (i % 26)), (wormSizeH * (i / 26)), wormSizeW, wormSizeH, componente);
             Rectangle wormColi = new Rectangle(worm.getX(), worm.getY(), wormSizeW, wormSizeH);
             Rectangle blockColi = new Rectangle((wormSizeW * (i % 26)), (wormSizeH * (i / 26)), wormSizeW, wormSizeH);
-            if (wormColi.intersects(blockColi)) {
-                if(world[i]>-1){
-                    world[i] = -1;
-                    ge.tocarSom("sons/comendo.wav");
-                }
+            if (wormColi.intersects(blockColi) && world[i]>-1) {
+                world[i] = -1;
+                ge.tocarSom("sons/comendo.wav");
             }
         }
 
