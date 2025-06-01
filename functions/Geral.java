@@ -1,6 +1,9 @@
 package functions;
 
 import javax.sound.sampled.*;
+import javax.swing.ImageIcon;
+import java.awt.*;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -29,5 +32,10 @@ public class Geral {
         }
 
         return max;
+    }
+
+    public Image image (String url){
+        ImageIcon icon  = new ImageIcon(url);
+        return icon.getImage();
     }
 }

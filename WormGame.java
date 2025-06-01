@@ -13,15 +13,19 @@ public class WormGame extends JPanel implements ActionListener {
     private final ControlePersonagem controle = new ControlePersonagem();
     private Worm worm = new Worm();
     private Jjogo jjogo = new Jjogo();
+    private Jinv jinv = new Jinv();
     private Redimension r = new Redimension();
     private WorldGeneration w = new WorldGeneration();
     private Geral ge = new Geral();
     String seed = "0";
+    public void setSeed(String seed) {
+        this.seed = seed;
+    }
     int[] world = w.gen(seed);
 
     int[][] worldc = new int[50][50];
-    int worldx = 25;
-    int worldy = 25;
+    int worldx = worldc.length / 2;
+    int worldy = worldc.length / 2;
     int worldn = 1;
     List<int[]> worlds = new ArrayList<>();
 
@@ -46,14 +50,21 @@ public class WormGame extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int[] actualWorld = worlds.get(worldc[worldx][worldy] - 1);
-        jjogo.desenhar(g, worm, getWidth(), getHeight(), this, controle.getVelocidadeX(), controle.getVelocidadeY(),
-                actualWorld);
+        if(!controle.isInv()){
+            int[] actualWorld = worlds.get(worldc[worldx][worldy] - 1);
+            jjogo.desenhar(g, worm, getWidth(), getHeight(), this, controle.getVelocidadeX(), controle.getVelocidadeY(),
+                    actualWorld);
+        } else {
+            jinv.desenhar(g, worm, getWidth(), getHeight(), this);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (0 != controle.getVelocidadeX() || 0 != controle.getVelocidadeY()) {
+        if (0 != controle.getVelocidadeX() || 0 != controle.getVelocidadeY() || controle.isRfinv()) {
+            if(controle.isRfinv()){
+                controle.setRfinv(false);
+            }
             if (worm.getX() + controle.getVelocidadeX() >= 0 && worm.getX() + controle.getVelocidadeX() <= getWidth())
                 worm.setX(worm.getX() + controle.getVelocidadeX());
             else {
@@ -62,8 +73,8 @@ public class WormGame extends JPanel implements ActionListener {
                     switch (direcao) {
                         case "a" -> {
                             worldx -= 1;
-                            if (worldx <= 0)
-                                worldx = 49;
+                            if (worldx < 0)
+                                worldx = worldc.length-1;
                             if (worldc[worldx][worldy] != 0)
                                 worldn = worldc[worldx][worldy];
                             else {
@@ -75,7 +86,7 @@ public class WormGame extends JPanel implements ActionListener {
                         }
                         case "d" -> {
                             worldx += 1;
-                            if (worldx >= 50)
+                            if (worldx >= worldc.length)
                                 worldx = 0;
                             if (worldc[worldx][worldy] != 0)
                                 worldn = worldc[worldx][worldy];
@@ -93,7 +104,7 @@ public class WormGame extends JPanel implements ActionListener {
                             worm.setY(getHeight());
                         }
                     }
-                    System.out.println("x:" + worldx + "\ny:" + worldy +"\nn:"+worldn+"\n_______");
+                    System.out.println("x:" + worldx + "\ny:" + worldy + "\nn:" + worldn + "\n_______");
                 } catch (Exception ex) {
                 }
             }
@@ -106,7 +117,7 @@ public class WormGame extends JPanel implements ActionListener {
                         case "s" -> {
                             worldy -= 1;
                             if (worldy <= 0)
-                                worldy = 49;
+                                worldy = worldc.length - 1;
                             if (worldc[worldx][worldy] != 0)
                                 worldn = worldc[worldx][worldy];
                             else {
@@ -118,7 +129,7 @@ public class WormGame extends JPanel implements ActionListener {
                         }
                         case "w" -> {
                             worldy += 1;
-                            if (worldy >= 50)
+                            if (worldy >= worldc.length)
                                 worldy = 0;
                             if (worldc[worldx][worldy] != 0)
                                 worldn = worldc[worldx][worldy];
@@ -130,7 +141,7 @@ public class WormGame extends JPanel implements ActionListener {
                             worm.setY(getHeight());
                         }
                         default -> {
-                             System.out.println(direcao);
+                            System.out.println(direcao);
                             worldy += 1;
                             worldc[worldx][worldy] = worldn;
                             worm.setY(getHeight());
@@ -142,9 +153,8 @@ public class WormGame extends JPanel implements ActionListener {
             }
             repaint();
         }
-    }
-
-    public static void main(String[] args) {
-        new WormGame();
+        else if(controle.isInv()){
+            repaint();
+        }
     }
 }

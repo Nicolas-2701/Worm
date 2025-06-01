@@ -17,13 +17,13 @@ public class Redimension {
         this.h = h;
     }
 
-    public int porcentagem(int n, String side){
+    public int porcentagem(double n, String side){
         switch (side) {
             case "w" -> {
-                return w*n/100;
+                return (int)(w*(n/100));
             }
             case "h" -> {
-                return h*n/100;
+                return (int)(h*(n/100));
             }
             default -> {
                 return 0;
