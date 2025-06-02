@@ -3,11 +3,9 @@ package functions;
 import java.awt.event.*;
 
 public class ControlePersonagem extends KeyAdapter {
-    private int velocidadeX = 0, velocidadeY = 0;
+    private int velocidadeX = 0, velocidadeY = 0, xinv = 0, yinv = 0;;
     private int velocidade;
-    private boolean inv = false;
-    private boolean rfinv = false;
-    private boolean lock = false;
+    private boolean inv = false, lock = false, rfinv = false, vendido = false, comprado = true;
 
     public int getVelocidadeX() {
         return velocidadeX;
@@ -37,9 +35,33 @@ public class ControlePersonagem extends KeyAdapter {
         this.rfinv = rfinv;
     }
 
+    public int getXinv() {
+        return xinv;
+    }
+
+    public int getYinv() {
+        return yinv;
+    }
+
+    public boolean isVendido() {
+        return vendido;
+    }
+
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
+    }
+
+    public boolean isComprado() {
+        return comprado;
+    }
+
+    public void setComprado(boolean comprado) {
+        this.comprado = comprado;
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
-        if(!lock){
+        if (!lock) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_A -> {
                     velocidadeX = -velocidade;
@@ -70,6 +92,28 @@ public class ControlePersonagem extends KeyAdapter {
                     inv = false;
                     lock = false;
                     rfinv = true;
+                }
+                case KeyEvent.VK_D -> {
+                    if (xinv + 1 < 8)
+                        xinv += 1;
+                }
+                case KeyEvent.VK_A -> {
+                    if (xinv - 1 > -1)
+                        xinv -= 1;
+                }
+                case KeyEvent.VK_S -> {
+                    if (yinv + 1 < 10)
+                        yinv += 1;
+                }
+                case KeyEvent.VK_W -> {
+                    if (yinv - 1 > -1)
+                        yinv -= 1;
+                }
+                case KeyEvent.VK_Q -> {
+                    if (xinv + 1 < 5)
+                        vendido = true;
+                    else
+                        comprado = true;
                 }
             }
         }

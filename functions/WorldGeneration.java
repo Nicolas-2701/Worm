@@ -125,13 +125,11 @@ public class WorldGeneration {
             seedI = seedI*seedI;
         }
         int[] world = new int[340];
-        int unluck = 0;
         for (int i = 0; i < world.length; i++) {
             world[i] = (((seedI + 1) * (i + 1) * 10) * ((seedI + 1) * ((i + 1) * 1965))) / 2025;
             int test = world[i] % 2701;
             if (test == 0) {
                 world[i] = 0;// ruby
-                unluck = 0;
             } else if (test > 0 && test <= 20) {
                 world[i] = 1;// diamond
             } else if (test > 20 && test <= 100) {
@@ -142,11 +140,6 @@ public class WorldGeneration {
                 world[i] = 4;// copper
             } else {
                 world[i] = 5;// dirt
-                unluck++;
-                if (unluck == 200) {
-                    unluck = 0;
-                    world[i] = 0;
-                }
             }
         }
         for (int i = 0; i < world.length; i++) {

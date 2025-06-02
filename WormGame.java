@@ -17,10 +17,13 @@ public class WormGame extends JPanel implements ActionListener {
     private Redimension r = new Redimension();
     private WorldGeneration w = new WorldGeneration();
     private Geral ge = new Geral();
+    private Specific s = new Specific();
     String seed = "0";
+
     public void setSeed(String seed) {
         this.seed = seed;
     }
+
     int[] world = w.gen(seed);
 
     int[][] worldc = new int[50][50];
@@ -50,19 +53,25 @@ public class WormGame extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(!controle.isInv()){
+        if (!controle.isInv()) {
             int[] actualWorld = worlds.get(worldc[worldx][worldy] - 1);
             jjogo.desenhar(g, worm, getWidth(), getHeight(), this, controle.getVelocidadeX(), controle.getVelocidadeY(),
                     actualWorld);
         } else {
-            jinv.desenhar(g, worm, getWidth(), getHeight(), this);
+            jinv.desenhar(g, worm, getWidth(), getHeight(), this, controle.getXinv(), controle.getYinv(),
+                    controle.isVendido(), controle.isComprado(), worm.getInventario().getLoja(), controle);
+            if (controle.isComprado()) {
+                s.lojaItens(worm.getInventario().getLoja());
+            }
+            controle.setVendido(false);
+            controle.setComprado(false);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (0 != controle.getVelocidadeX() || 0 != controle.getVelocidadeY() || controle.isRfinv()) {
-            if(controle.isRfinv()){
+            if (controle.isRfinv()) {
                 controle.setRfinv(false);
             }
             if (worm.getX() + controle.getVelocidadeX() >= 0 && worm.getX() + controle.getVelocidadeX() <= getWidth())
@@ -74,7 +83,7 @@ public class WormGame extends JPanel implements ActionListener {
                         case "a" -> {
                             worldx -= 1;
                             if (worldx < 0)
-                                worldx = worldc.length-1;
+                                worldx = worldc.length - 1;
                             if (worldc[worldx][worldy] != 0)
                                 worldn = worldc[worldx][worldy];
                             else {
@@ -152,8 +161,7 @@ public class WormGame extends JPanel implements ActionListener {
                 }
             }
             repaint();
-        }
-        else if(controle.isInv()){
+        } else if (controle.isInv()) {
             repaint();
         }
     }
