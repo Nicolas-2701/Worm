@@ -41,7 +41,7 @@ public class WormGame extends JPanel implements ActionListener {
 
         setFocusable(true);
         addKeyListener(controle);
-        controle.setVelocidade(5);
+        controle.setVelocidade(1);
 
         JFrame frame = new JFrame("WormGame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

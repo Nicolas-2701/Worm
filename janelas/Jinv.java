@@ -17,6 +17,7 @@ public class Jinv {
         r.setW(largura);
         r.setH(altura);
         String[][] inventario = worm.getInventario().getInv();
+        s.itemCheck(worm, controle);
         // background
         image = ge.image("sprites/inventario/bg_1.png");
         g.drawImage(image, 0, 0, largura, altura, componente);
@@ -75,7 +76,7 @@ public class Jinv {
                     (r.porcentagem(80, "h")), r.porcentagem(5, "w"),
                     r.porcentagem(10, "h"), componente);
         }
-        if (vendido) {
+        if (vendido && inventario[(invx * 5 + invy)][2] != null) {
             int raridade = Integer.parseInt(inventario[(invx * 5 + invy)][2]);
             int quantidade = Integer.parseInt(inventario[(invx * 5 + invy)][1]);
             switch (raridade) {

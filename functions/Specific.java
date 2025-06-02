@@ -183,6 +183,23 @@ public class Specific {
         } else {
             controle.setComprado(false);
         }
-    
+
+    }
+
+    public void itemCheck(Worm worm, ControlePersonagem controle) {
+        String[][] inventario = worm.getInventario().getInv();
+        int velocidade = 1;
+        for (int i = 0; i < 50; i++) {
+            if (inventario[i][0] != null) {
+                switch (inventario[i][0]) {
+                    case "sprites/inventario/itens/Pena_1.png":
+                        controle.setVelocidade(velocidade + 1 * Integer.parseInt(inventario[i][1]));
+                        velocidade = controle.getVelocidade();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }
