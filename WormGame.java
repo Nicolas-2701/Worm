@@ -36,6 +36,10 @@ public class WormGame extends JPanel implements ActionListener {
         Timer timer = new Timer(16, this); // ~60 FPS
         timer.start();
 
+        world[27] = -1;
+        world[28] = -1;
+        world[53] = -1;
+        world[54] = -1;
         worlds.add(world);
         worldc[worldx][worldy] = worldn;
 

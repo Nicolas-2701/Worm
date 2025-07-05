@@ -50,6 +50,7 @@ public class Jjogo {
                 s.armazenar(worm, world[i]);
                 world[i] = -1;
                 ge.tocarSom("sons/comendo.wav");
+                s.enemieEncounter(worm);
             }
         }
 

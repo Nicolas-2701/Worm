@@ -3,6 +3,7 @@ package functions;
 import java.util.Random;
 
 import entidades.Worm;
+import entidades.enemies.Enemie;
 
 public class Specific {
 
@@ -193,13 +194,22 @@ public class Specific {
             if (inventario[i][0] != null) {
                 switch (inventario[i][0]) {
                     case "sprites/inventario/itens/Pena_1.png":
-                        controle.setVelocidade(velocidade + 1 * Integer.parseInt(inventario[i][1]));
-                        velocidade = controle.getVelocidade();
+                        velocidade = velocidade + 1 * Integer.parseInt(inventario[i][1]);
                         break;
                     default:
                         break;
                 }
             }
         }
+        controle.setVelocidade(velocidade);
+    }
+
+    public void enemieEncounter(Worm worm){
+        Random rand = new Random();
+        int ten =  rand.nextInt(10)+1;
+        if(ten == 10){
+            System.out.println("batalha");
+        }
+
     }
 }
